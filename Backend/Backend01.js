@@ -14,18 +14,13 @@ app.get('/songs', (req, res) => {
   res.status(200).send(data.songs)
 })
 
-app.get('/songs/:id', (req, res) => {
-  output = songs.find( x=> x.id === +req.params.id)
-  res.status(200).send(output)
-})
+// app.get('/songs/:id', (req, res) => {
+//   output = songs.find( x=> x.id === +req.params.id)
+//   res.status(200).send(output)
+// })
 
-
-app.get('/songsReset', (req, res) => {
-  console.log('-------')
-  console.log({songs})
+app.delete('/songsReset', (req, res) => {
   songs = []
-  console.log({songs})
-  console.log('-------')
   let wdata = { songs }
   res.status(200).send('Reset all data')
   fs.writeFileSync('./songs.json',JSON.stringify(wdata))

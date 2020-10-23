@@ -30,13 +30,19 @@
 
         React.useEffect(() => {
           fetchData()
-          return () => {
-            // cleanup
-          }
+          return () => { }
         }, [])
 
-        const addSong = () => {
+        const addSong = (e) => {
+          //  e.preventDefault()
            axios.post(`http://localhost:5000/songs/${text}`)
+           .then( resp=> {
+              console.log(resp.data)
+              fetchData()
+           })
+        }
+        const resetSong = () => {
+           axios.delete(`http://localhost:5000/songsReset`)
            .then( resp=> {
               console.log(resp.data)
              fetchData()
@@ -45,14 +51,14 @@
 
         return (
           <div className="App">
-             <h1> Todo </h1> 
+             <h1>Favorite Songs </h1> 
              <input onChange={ (e) => setText(e.target.value) } />
              <button onClick={ addSong }>Add</button>
+             <button onClick={ resetSong }>Reset</button>
              <ul>
                 {songs.map( x => 
                     <li key={x.id}> {x.id}, {x.name}</li>
-                  )}
-              
+                  )}             
               </ul>
           </div>
         )
